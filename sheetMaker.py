@@ -17,14 +17,14 @@ shuffler_playlist = sp.user_playlist('hrkp', playlist_id=playlist_uri)[
                                      'tracks']['items']
 
 # Create empty data frame for
-colNames = ["Artist", "Album", "Title", "Weighting", "ID"]
+colNames = ["Artist", "Album", "Title", "Weighting", "URI"]
 playlist_frame = pd.DataFrame(columns=colNames)
 
 # Populate data frame from playlist
 for song in shuffler_playlist:
     song = song['track']
     songFrame = pd.DataFrame([[song['artists'][0]['name'], song['album']['name'],
-    song['name'],5, song['id']]], columns=["Artist", "Album", "Title", "Weighting", "ID"])
+    song['name'],5, song['uri']]], columns=["Artist", "Album", "Title", "Weighting", "URI"])
     playlist_frame = playlist_frame.append(songFrame)
 
 # Save as excel file
