@@ -20,16 +20,8 @@ new_ids = []
 for idx in range(n_songs):
     new_ids.append(np.random.choice(ids, p=probs))
 
-# loginto spotify
-# Get access token
-token = msp.get_token('hrkp',
-                      scope='user-modify-playback-state playlist-read-private\
-                      user-modify-private')
-
-# shuffler_playlist URI
-playlist_uri = 'spotify:user:hrkp:playlist:097gO1u0aaAjH0u2lX1Ylg'
-
-sp = spotipy.Spotify(auth=token)
+# Loginto spotipy
+sp = msp.spotify_login()
 
 # Play shuffled songs
 sp.start_playback(uris=new_ids)

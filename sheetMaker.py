@@ -3,15 +3,11 @@ import spotipyFuncs as msp
 import numpy as np
 import pandas as pd
 
-# Get access token
-token = msp.get_token('hrkp',
-                      scope='user-modify-playback-state playlist-read-private\
-                      user-modify-private')
+# Login to spotify
+sp = msp.spotify_login()
 
 # shuffler_playlist URI
 playlist_uri = 'spotify:user:hrkp:playlist:097gO1u0aaAjH0u2lX1Ylg'
-
-sp = spotipy.Spotify(auth=token)
 
 shuffler_playlist = sp.user_playlist('hrkp', playlist_id=playlist_uri)[
                                      'tracks']['items']
