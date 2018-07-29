@@ -1,5 +1,6 @@
 import spotipy
 import spotipyFuncs as msp
+import sheetFuns as sf
 import numpy as np
 import pandas as pd
 
@@ -16,11 +17,24 @@ shuffler_playlist = sp.user_playlist('hrkp', playlist_id=playlist_uri)[
 colNames = ["Artist", "Album", "Title", "Weighting", "URI"]
 playlist_frame = pd.DataFrame(columns=colNames)
 
-# Populate data frame from playlist
+# Find pre extisting spreadsheet
+originalSheet = sf.load_sheet()
+
+# Populate data frame from spotify playlist
 for song in shuffler_playlist:
+    # Data associated with song
     song = song['track']
+
+    # If the song is in orginalSheet using preexting weighting otherwise set it to 5
+    try:
+        originalSheet['URI'].str.contains(song['uri'])
+        weight = originalSheet['Weighting'][originalSheet['URI']==song['uri']].iloc[0]
+    except TypeError and IndexError:
+        weight = 5
+    
+    # Add song to new dataframe
     songFrame = pd.DataFrame([[song['artists'][0]['name'], song['album']['name'],
-    song['name'],5, song['uri']]], columns=["Artist", "Album", "Title", "Weighting", "URI"])
+    song['name'], weight, song['uri']]], columns=colNames)
     playlist_frame = playlist_frame.append(songFrame)
 
 # Save as excel file
