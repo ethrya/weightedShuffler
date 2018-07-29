@@ -108,3 +108,4 @@ venv.bak/
 keys.py
 .cache-hrkp
 weightings.xlsx
+launch.json
