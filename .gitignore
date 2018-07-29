@@ -107,3 +107,4 @@ venv.bak/
 # project specific files
 keys.py
 .cache-hrkp
+weightings.xlsx
