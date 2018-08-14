@@ -14,14 +14,12 @@ total_weight = weightings['Weighting'].sum()
 probs = weightings['Weighting']/total_weight
 
 ids = list(weightings['URI'])
-new_ids = []
 
 # Sample n_songs without replacement with probability probs
-for idx in range(n_songs):
-    new_ids.append(np.random.choice(ids, p=probs))
+new_ids = np.random.choice(ids, size=10, p=probs, replace=False)
 
 # Loginto spotipy
 sp = msp.spotify_login()
 
 # Play shuffled songs
-sp.start_playback(uris=new_ids)
+sp.start_playback(uris=list(new_ids))
