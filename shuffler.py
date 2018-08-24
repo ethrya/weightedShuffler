@@ -2,8 +2,17 @@ import spotipy
 import spotipyFuncs as msp
 import numpy as np
 import pandas as pd
+import argparse
 
-n_songs = 10
+# Create arguement parser
+parser = argparse.ArgumentParser()
+# Accept number of songs as input
+parser.add_argument("--n_songs", type=int,
+                    help="Number of songs in playlist",
+                    default = 10)
+
+args = parser.parse_args()
+
 
 # Load spreadsheet
 weightings=pd.read_excel('weightings.xlsx')
@@ -16,7 +25,7 @@ probs = weightings['Weighting']/total_weight
 ids = list(weightings['URI'])
 
 # Sample n_songs without replacement with probability probs
-new_ids = np.random.choice(ids, size=10, p=probs, replace=False)
+new_ids = np.random.choice(ids, size=args.n_songs, p=probs, replace=False)
 
 # Loginto spotipy
 sp = msp.spotify_login()
